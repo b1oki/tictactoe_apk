@@ -1,0 +1,205 @@
+package info.dyndns.b1oki.tictac;
+
+import android.app.Activity;
+import android.app.AlertDialog;
+import android.content.DialogInterface;
+import android.content.Intent;
+import android.os.Bundle;
+import android.speech.tts.TextToSpeech;
+import android.view.Menu;
+import android.view.MenuItem;
+import android.view.View;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
+import android.widget.GridView;
+import android.widget.TextView;
+
+public class GameActivity extends Activity implements AdapterView.OnItemClickListener {
+  private static String[] datafield = { "", "", "", "", "", "", "", "", "" };
+  
+  private static boolean isTicMove = true;
+  
+  private static boolean speaked = false;
+  
+  ArrayAdapter<String> dataAdapter;
+  
+  GridView dataField;
+  
+  TextView infoText;
+  
+  int tic = 0;
+  
+  TextView ticScores;
+  
+  int toe = 0;
+  
+  TextView toeScores;
+  
+  TextToSpeech tts;
+  
+  private String checkGame() {
+    byte b1;
+    for (b1 = 0;; b1++) {
+      if (b1 >= 3) {
+        for (b1 = 0;; b1++) {
+          if (b1 >= 3) {
+            if ((datafield[2] == datafield[4] && datafield[4] == datafield[6]) || (datafield[false] == datafield[4] && datafield[4] == datafield[8]))
+              return datafield[4]; 
+            break;
+          } 
+          if (datafield[b1] == datafield[b1 + 3] && datafield[b1] == datafield[b1 + 6])
+            return datafield[b1]; 
+        } 
+        break;
+      } 
+      if (datafield[b1 * 3] == datafield[b1 * 3 + true] && datafield[b1 * 3] == datafield[b1 * 3 + 2])
+        return datafield[b1 * 3]; 
+    } 
+    byte b2 = 0;
+    b1 = 0;
+    while (true) {
+      if (b1 >= datafield.length) {
+        if (b2 >= 9)
+          return "P"; 
+        break;
+      } 
+      byte b = b2;
+      if (datafield[b1] != "")
+        b = b2 + true; 
+      b1++;
+      b2 = b;
+    } 
+    return "N";
+  }
+  
+  private void restart() {
+    for (byte b = 0;; b++) {
+      if (b >= datafield.length) {
+        this.dataAdapter.notifyDataSetChanged();
+        this.dataField.invalidateViews();
+        return;
+      } 
+      datafield[b] = "";
+    } 
+  }
+  
+  private void speak(String paramString) {
+    if (speaked)
+      this.tts.speak(paramString, 0, null); 
+  }
+  
+  protected void onCreate(Bundle paramBundle) {
+    super.onCreate(paramBundle);
+    setContentView(2130903041);
+    this.infoText = (TextView)findViewById(2131165185);
+    this.ticScores = (TextView)findViewById(2131165186);
+    this.toeScores = (TextView)findViewById(2131165187);
+    this.dataField = (GridView)findViewById(2131165188);
+    this.dataField.setOnItemClickListener(this);
+    this.dataAdapter = new ArrayAdapter(this, 2130903042, 2131165189, datafield);
+    this.dataField.setAdapter(this.dataAdapter);
+    this.tts = new TextToSpeech(this, new TextToSpeech.OnInitListener(this) {
+          public void onInit(int param1Int) {}
+        });
+    this.infoText.setText(2130968581);
+  }
+  
+  public boolean onCreateOptionsMenu(Menu paramMenu) {
+    getMenuInflater().inflate(2131099648, paramMenu);
+    return true;
+  }
+  
+  protected void onDestroy() {
+    super.onDestroy();
+    this.tts.shutdown();
+  }
+  
+  public void onItemClick(AdapterView<?> paramAdapterView, View paramView, int paramInt, long paramLong) {
+    if (((TextView)paramAdapterView.getChildAt(paramInt).findViewById(2131165189)).getText() == "") {
+      if (isTicMove) {
+        datafield[paramInt] = "X";
+        isTicMove = false;
+        this.infoText.setText(2130968587);
+      } else {
+        datafield[paramInt] = "O";
+        isTicMove = true;
+        this.infoText.setText(2130968586);
+      } 
+      this.dataAdapter.notifyDataSetChanged();
+      this.dataField.invalidateViews();
+    } else {
+      speak(getResources().getString(2130968594));
+      this.infoText.setText(2130968594);
+    } 
+    TextView textView = checkGame();
+    if (textView == "P") {
+      this.infoText.setText(2130968590);
+      restart();
+      return;
+    } 
+    if (textView == "X") {
+      speak(getResources().getString(2130968588));
+      this.infoText.setText(2130968588);
+      textView = this.ticScores;
+      StringBuilder stringBuilder = (new StringBuilder(String.valueOf(getResources().getString(2130968582)))).append(' ');
+      paramInt = this.tic + 1;
+      this.tic = paramInt;
+      textView.setText(stringBuilder.append(paramInt).toString());
+      restart();
+      return;
+    } 
+    if (textView == "O") {
+      speak(getResources().getString(2130968589));
+      this.infoText.setText(2130968589);
+      textView = this.toeScores;
+      StringBuilder stringBuilder = (new StringBuilder(String.valueOf(getResources().getString(2130968583)))).append(' ');
+      paramInt = this.toe + 1;
+      this.toe = paramInt;
+      textView.setText(stringBuilder.append(paramInt).toString());
+      restart();
+      return;
+    } 
+    speak(getResources().getString(2130968593));
+  }
+  
+  public boolean onOptionsItemSelected(MenuItem paramMenuItem) {
+    boolean bool = false;
+    switch (paramMenuItem.getItemId()) {
+      default:
+        return super.onOptionsItemSelected(paramMenuItem);
+      case 2131165190:
+        if (!speaked)
+          bool = true; 
+        speaked = bool;
+      case 2131165191:
+        startActivity(new Intent(this, AboutActivity.class));
+      case 2131165192:
+        break;
+    } 
+    AlertDialog.Builder builder = new AlertDialog.Builder(this);
+    builder.setMessage(2130968592).setCancelable(false).setPositiveButton(17039379, new DialogInterface.OnClickListener() {
+          public void onClick(DialogInterface param1DialogInterface, int param1Int) { GameActivity.this.finish(); }
+        }).setNegativeButton(17039369, new DialogInterface.OnClickListener() {
+          public void onClick(DialogInterface param1DialogInterface, int param1Int) { param1DialogInterface.cancel(); }
+        });
+    builder.create().show();
+  }
+  
+  protected void onRestoreInstanceState(Bundle paramBundle) {
+    super.onRestoreInstanceState(paramBundle);
+    datafield = paramBundle.getStringArray("GameField");
+    isTicMove = paramBundle.getBoolean("isTicMove");
+    speaked = paramBundle.getBoolean("Speaked");
+    this.tic = paramBundle.getInt("Tic");
+    this.toe = paramBundle.getInt("Toe");
+  }
+  
+  protected void onSaveInstanceState(Bundle paramBundle) {
+    super.onSaveInstanceState(paramBundle);
+    paramBundle.putStringArray("GameField", datafield);
+    paramBundle.putBoolean("isTicMove", isTicMove);
+    paramBundle.putBoolean("Speaked", speaked);
+    paramBundle.putInt("Tic", this.tic);
+    paramBundle.putInt("Toe", this.toe);
+  }
+}

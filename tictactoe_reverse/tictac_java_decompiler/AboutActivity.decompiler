@@ -1,0 +1,11 @@
+package info.dyndns.b1oki.tictac;
+
+import android.app.Activity;
+import android.os.Bundle;
+
+public class AboutActivity extends Activity {
+  protected void onCreate(Bundle paramBundle) {
+    super.onCreate(paramBundle);
+    setContentView(2130903040);
+  }
+}
