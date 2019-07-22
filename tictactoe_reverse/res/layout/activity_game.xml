@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout android:orientation="vertical" android:layout_width="fill_parent" android:layout_height="fill_parent"
+  xmlns:android="http://schemas.android.com/apk/res/android">
+    <TableLayout android:id="@id/gameInfo" android:layout_width="fill_parent" android:layout_height="wrap_content" android:layout_alignParentLeft="true" android:layout_alignParentTop="true">
+        <TextView android:textSize="18.0sp" android:gravity="center" android:id="@id/infoText" android:layout_width="fill_parent" android:layout_height="wrap_content" android:layout_margin="5.0dip" android:hint="@string/game_info" />
+        <TableRow android:layout_width="fill_parent" android:layout_height="wrap_content">
+            <TextView android:textSize="16.0sp" android:id="@id/ticScoresText" android:layout_width="wrap_content" android:layout_height="wrap_content" android:layout_marginLeft="20.0dip" android:layout_marginRight="20.0dip" android:hint="@string/tic_score" android:layout_weight="1.0" />
+            <TextView android:textSize="16.0sp" android:id="@id/toeScoresText" android:layout_width="wrap_content" android:layout_height="wrap_content" android:layout_marginLeft="20.0dip" android:layout_marginRight="20.0dip" android:hint="@string/toe_score" android:layout_weight="1.0" />
+        </TableRow>
+    </TableLayout>
+    <GridView android:id="@id/gameField" android:layout_width="fill_parent" android:layout_height="fill_parent" android:layout_margin="5.0dip" android:stretchMode="spacingWidthUniform" android:columnWidth="90.0dip" android:numColumns="3" android:layout_below="@id/gameInfo" />
+</RelativeLayout>

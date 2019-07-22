@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">Крестики-нолики</string>
+    <string name="menu_speak">Озвучка</string>
+    <string name="menu_about">О программе</string>
+    <string name="menu_exit">Выход</string>
+    <string name="game_info">Игровая информация</string>
+    <string name="welcome">Добро пожаловать! Первым ходят крестики.</string>
+    <string name="tic">Крестики</string>
+    <string name="toe">Нолики</string>
+    <string name="tic_score">Очки крестиков</string>
+    <string name="toe_score">Очки ноликов</string>
+    <string name="tic_move">Ход крестиков</string>
+    <string name="toe_move">Ход ноликов</string>
+    <string name="tic_win">Крестики победили!</string>
+    <string name="toe_win">Нолики победили!</string>
+    <string name="no_win">Ничья!</string>
+    <string name="about_game">Здравствуйте, это игра крестики-нолики, сделана b1oki с сайта http://b1oki.hut4.ru !</string>
+    <string name="onexitpressed">Вы уверены, что хотите покинуть игру?</string>
+    <string name="move">Ход завершен</string>
+    <string name="cellownd">Клетка занята</string>
+</resources>
