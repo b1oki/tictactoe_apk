@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <item name="gameInfo" type="id" />
+    <item name="infoText" type="id" />
+    <item name="ticScoresText" type="id" />
+    <item name="toeScoresText" type="id" />
+    <item name="gameField" type="id" />
+    <item name="one_field" type="id" />
+    <item name="menu_speak" type="id" />
+    <item name="menu_about" type="id" />
+    <item name="menu_exit" type="id" />
+</resources>

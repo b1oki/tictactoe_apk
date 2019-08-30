@@ -1,0 +1,21 @@
+<resources>
+    <string name="app_name">TicTacToe by b1oki</string>
+    <string name="menu_speak">Speak</string>
+    <string name="menu_about">About</string>
+    <string name="menu_exit">Exit</string>
+    <string name="game_info">Game Information</string>
+    <string name="welcome">Welcome! First move for Tic</string>
+    <string name="tic">Tic</string>
+    <string name="toe">Toe</string>
+    <string name="tic_score">"Tic's scores"</string>
+    <string name="toe_score">"Toe's scores"</string>
+    <string name="tic_move">Now Tic move</string>
+    <string name="toe_move">Now Toe move</string>
+    <string name="tic_win">Tic win!</string>
+    <string name="toe_win">Toe win!</string>
+    <string name="no_win">Pat!</string>
+    <string name="about_game">Hello! This game created by b1oki!</string>
+    <string name="onexitpressed">Are you sure You want to exit?</string>
+    <string name="move">Move</string>
+    <string name="cellownd">Blocked cell</string>
+</resources>
