@@ -90,22 +90,22 @@ public class GameActivity extends Activity implements AdapterView.OnItemClickLis
   
   protected void onCreate(Bundle paramBundle) {
     super.onCreate(paramBundle);
-    setContentView(2130903041);
-    this.infoText = (TextView)findViewById(2131165185);
-    this.ticScores = (TextView)findViewById(2131165186);
-    this.toeScores = (TextView)findViewById(2131165187);
-    this.dataField = (GridView)findViewById(2131165188);
+    setContentView(layout_activity_game);
+    this.infoText = (TextView)findViewById(infoText);
+    this.ticScores = (TextView)findViewById(ticScoresText);
+    this.toeScores = (TextView)findViewById(toeScoresText);
+    this.dataField = (GridView)findViewById(gameField);
     this.dataField.setOnItemClickListener(this);
-    this.dataAdapter = new ArrayAdapter(this, 2130903042, 2131165189, datafield);
+    this.dataAdapter = new ArrayAdapter(this, grid_field, one_field, datafield);
     this.dataField.setAdapter(this.dataAdapter);
     this.tts = new TextToSpeech(this, new TextToSpeech.OnInitListener(this) {
           public void onInit(int param1Int) {}
         });
-    this.infoText.setText(2130968581);
+    this.infoText.setText(welcome);
   }
   
   public boolean onCreateOptionsMenu(Menu paramMenu) {
-    getMenuInflater().inflate(2131099648, paramMenu);
+    getMenuInflater().inflate(menu_activity_game, paramMenu);
     return true;
   }
   
@@ -115,33 +115,33 @@ public class GameActivity extends Activity implements AdapterView.OnItemClickLis
   }
   
   public void onItemClick(AdapterView<?> paramAdapterView, View paramView, int paramInt, long paramLong) {
-    if (((TextView)paramAdapterView.getChildAt(paramInt).findViewById(2131165189)).getText() == "") {
+    if (((TextView)paramAdapterView.getChildAt(paramInt).findViewById(one_field)).getText() == "") {
       if (isTicMove) {
         datafield[paramInt] = "X";
         isTicMove = false;
-        this.infoText.setText(2130968587);
+        this.infoText.setText(toe_move);
       } else {
         datafield[paramInt] = "O";
         isTicMove = true;
-        this.infoText.setText(2130968586);
+        this.infoText.setText(tic_move);
       } 
       this.dataAdapter.notifyDataSetChanged();
       this.dataField.invalidateViews();
     } else {
-      speak(getResources().getString(2130968594));
-      this.infoText.setText(2130968594);
+      speak(getResources().getString(cellownd));
+      this.infoText.setText(cellownd);
     } 
     TextView textView = checkGame();
     if (textView == "P") {
-      this.infoText.setText(2130968590);
+      this.infoText.setText(no_win);
       restart();
       return;
     } 
     if (textView == "X") {
-      speak(getResources().getString(2130968588));
-      this.infoText.setText(2130968588);
+      speak(getResources().getString(tic_win));
+      this.infoText.setText(tic_win);
       textView = this.ticScores;
-      StringBuilder stringBuilder = (new StringBuilder(String.valueOf(getResources().getString(2130968582)))).append(' ');
+      StringBuilder stringBuilder = (new StringBuilder(String.valueOf(getResources().getString(tic)))).append(' ');
       paramInt = this.tic + 1;
       this.tic = paramInt;
       textView.setText(stringBuilder.append(paramInt).toString());
@@ -149,17 +149,17 @@ public class GameActivity extends Activity implements AdapterView.OnItemClickLis
       return;
     } 
     if (textView == "O") {
-      speak(getResources().getString(2130968589));
-      this.infoText.setText(2130968589);
+      speak(getResources().getString(toe_win));
+      this.infoText.setText(toe_win);
       textView = this.toeScores;
-      StringBuilder stringBuilder = (new StringBuilder(String.valueOf(getResources().getString(2130968583)))).append(' ');
+      StringBuilder stringBuilder = (new StringBuilder(String.valueOf(getResources().getString(toe)))).append(' ');
       paramInt = this.toe + 1;
       this.toe = paramInt;
       textView.setText(stringBuilder.append(paramInt).toString());
       restart();
       return;
     } 
-    speak(getResources().getString(2130968593));
+    speak(getResources().getString(move));
   }
   
   public boolean onOptionsItemSelected(MenuItem paramMenuItem) {
@@ -167,17 +167,17 @@ public class GameActivity extends Activity implements AdapterView.OnItemClickLis
     switch (paramMenuItem.getItemId()) {
       default:
         return super.onOptionsItemSelected(paramMenuItem);
-      case 2131165190:
+      case menu_speak:
         if (!speaked)
           bool = true; 
         speaked = bool;
-      case 2131165191:
+      case menu_about:
         startActivity(new Intent(this, AboutActivity.class));
-      case 2131165192:
+      case menu_exit:
         break;
     } 
     AlertDialog.Builder builder = new AlertDialog.Builder(this);
-    builder.setMessage(2130968592).setCancelable(false).setPositiveButton(17039379, new DialogInterface.OnClickListener() {
+    builder.setMessage(onexitpressed).setCancelable(false).setPositiveButton(17039379, new DialogInterface.OnClickListener() {
           public void onClick(DialogInterface param1DialogInterface, int param1Int) { GameActivity.this.finish(); }
         }).setNegativeButton(17039369, new DialogInterface.OnClickListener() {
           public void onClick(DialogInterface param1DialogInterface, int param1Int) { param1DialogInterface.cancel(); }
