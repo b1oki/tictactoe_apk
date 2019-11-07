@@ -1,5 +1,8 @@
 # TicTacToe by b1oki
 
+[![GitHub release](https://img.shields.io/github/release/b1oki/tictactoe_apk?maxAge=2592000&style=for-the-badge)](https://github.com/b1oki/tictactoe_apk)
+[![GitHub license](https://img.shields.io/github/license/b1oki/tictactoe_apk?style=for-the-badge)](https://github.com/b1oki/tictactoe_apk)
+
 Lost source. Android Tic Tac Toe game for two local players.
 
 # v2.0.0
