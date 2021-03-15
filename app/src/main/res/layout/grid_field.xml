@@ -14,5 +14,6 @@
         android:gravity="center"
         android:minWidth="80.0dip"
         android:minHeight="80.0dip"
+        android:textColor="@color/colorPrimary"
         android:textSize="72.0sp" />
 </LinearLayout>
