@@ -18,6 +18,10 @@ import androidx.appcompat.widget.Toolbar;
 
 public class Game extends AppCompatActivity implements AdapterView.OnItemClickListener {
 
+    private static final String symbolForX = "X";
+    private static final String symbolForO = "O";
+    private static final String symbolForPat = "P";
+
     private static String[] datafield = {"", "", "", "", "", "", "", "", ""};
 
     private static boolean isTicMove = true;
@@ -63,7 +67,7 @@ public class Game extends AppCompatActivity implements AdapterView.OnItemClickLi
         while (true) {
             if (b1 >= datafield.length) {
                 if (b2 >= 9)
-                    return "P";
+                    return symbolForPat;
                 break;
             }
             int b = b2;
@@ -99,11 +103,11 @@ public class Game extends AppCompatActivity implements AdapterView.OnItemClickLi
     public void onItemClick(AdapterView<?> paramAdapterView, View paramView, int paramInt, long paramLong) {
         if (((TextView) paramAdapterView.getChildAt(paramInt).findViewById(R.id.one_field)).getText() == "") {
             if (isTicMove) {
-                datafield[paramInt] = "X";
+                datafield[paramInt] = symbolForX;
                 isTicMove = false;
                 this.infoText.setText(R.string.toe_move);
             } else {
-                datafield[paramInt] = "O";
+                datafield[paramInt] = symbolForO;
                 isTicMove = true;
                 this.infoText.setText(R.string.tic_move);
             }
@@ -114,13 +118,13 @@ public class Game extends AppCompatActivity implements AdapterView.OnItemClickLi
             this.infoText.setText(R.string.cellownd);
         }
         String text = checkGame();
-        if (text.equals("P")) {
+        if (text.equals(symbolForPat)) {
             speak(getString(R.string.no_win));
             this.infoText.setText(R.string.no_win);
             restart();
             return;
         }
-        if (text.equals("X")) {
+        if (text.equals(symbolForX)) {
             speak(getString(R.string.tic_win));
             this.infoText.setText(R.string.tic_win);
             TextView textView = this.ticScores;
@@ -131,7 +135,7 @@ public class Game extends AppCompatActivity implements AdapterView.OnItemClickLi
             restart();
             return;
         }
-        if (text.equals("O")) {
+        if (text.equals(symbolForO)) {
             speak(getString(R.string.toe_win));
             this.infoText.setText(R.string.toe_win);
             TextView textView = this.toeScores;
