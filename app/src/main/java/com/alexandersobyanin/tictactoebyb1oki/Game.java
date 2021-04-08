@@ -5,6 +5,7 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.speech.tts.TextToSpeech;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -50,15 +51,18 @@ public class Game extends AppCompatActivity implements AdapterView.OnItemClickLi
             if (b1 >= 3) {
                 for (b1 = 0; ; b1++) {
                     if (b1 >= 3) {
+                        Log.d("Diagonal lines", datafield[2] + "-" + datafield[4] + "-" + datafield[6] + " - " + datafield[0] + "-" + datafield[4] + "-" + datafield[8]);
                         if (!datafield[6].equals("") && ((datafield[2].equals(datafield[4]) && datafield[4].equals(datafield[6])) || (datafield[0].equals(datafield[4]) && datafield[4].equals(datafield[8]))))
                             return datafield[4];
                         break;
                     }
+                    Log.d("Vertical line №" + b1, datafield[b1] + "-" + datafield[b1 + 3] + "-" + datafield[b1 + 6]);
                     if (!datafield[b1].equals("") && datafield[b1].equals(datafield[b1 + 3]) && datafield[b1].equals(datafield[b1 + 6]))
                         return datafield[b1];
                 }
                 break;
             }
+            Log.d("Horizontal line №" + b1, datafield[b1 * 3] + "-" + datafield[b1 * 3 + 1] + "-" + datafield[b1 * 3 + 2]);
             if (!datafield[b1 * 3].equals("") && datafield[b1 * 3].equals(datafield[b1 * 3 + 1]) && datafield[b1 * 3].equals(datafield[b1 * 3 + 2]))
                 return datafield[b1 * 3];
         }
@@ -118,6 +122,7 @@ public class Game extends AppCompatActivity implements AdapterView.OnItemClickLi
             this.infoText.setText(R.string.cellownd);
         }
         String text = checkGame();
+        Log.d("checkGame result", text);
         if (text.equals(symbolForPat)) {
             speak(getString(R.string.no_win));
             this.infoText.setText(R.string.no_win);
