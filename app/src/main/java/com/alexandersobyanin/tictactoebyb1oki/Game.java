@@ -50,16 +50,16 @@ public class Game extends AppCompatActivity implements AdapterView.OnItemClickLi
             if (b1 >= 3) {
                 for (b1 = 0; ; b1++) {
                     if (b1 >= 3) {
-                        if ((datafield[2].equals(datafield[4]) && datafield[4].equals(datafield[6])) || (datafield[0].equals(datafield[4]) && datafield[4].equals(datafield[8])))
+                        if (!datafield[6].equals("") && ((datafield[2].equals(datafield[4]) && datafield[4].equals(datafield[6])) || (datafield[0].equals(datafield[4]) && datafield[4].equals(datafield[8]))))
                             return datafield[4];
                         break;
                     }
-                    if (datafield[b1].equals(datafield[b1 + 3]) && datafield[b1].equals(datafield[b1 + 6]))
+                    if (!datafield[b1].equals("") && datafield[b1].equals(datafield[b1 + 3]) && datafield[b1].equals(datafield[b1 + 6]))
                         return datafield[b1];
                 }
                 break;
             }
-            if (datafield[b1 * 3].equals(datafield[b1 * 3 + 1]) && datafield[b1 * 3].equals(datafield[b1 * 3 + 2]))
+            if (!datafield[b1 * 3].equals("") && datafield[b1 * 3].equals(datafield[b1 * 3 + 1]) && datafield[b1 * 3].equals(datafield[b1 * 3 + 2]))
                 return datafield[b1 * 3];
         }
         int b2 = 0;
