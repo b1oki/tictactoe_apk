@@ -16,7 +16,7 @@
     <string name="toe_win">Нолики победили!</string>
     <string name="no_win">Ничья!</string>
     <string name="about_game">Здравствуйте! Эта игра сделана b1oki!</string>
-    <string name="onexitpressed">Вы уверены, что хотите покинуть игру?</string>
+    <string name="on_exit_pressed">Вы уверены, что хотите покинуть игру?</string>
     <string name="move">Ход завершен</string>
-    <string name="cellownd">Клетка занята</string>
+    <string name="cell_owned">Клетка занята</string>
 </resources>

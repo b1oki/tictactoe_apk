@@ -16,7 +16,7 @@ public class About extends AppCompatActivity {
         setContentView(R.layout.activity_about);
 
         web = findViewById(R.id.webView);
-        web.loadUrl("file:///android_asset/privacy_policy_tictactoe_b1oki.html");
+        web.loadUrl(getString(R.string.privacy_policy_url));
 
         ActionBar actionBar = getSupportActionBar();
         if (actionBar != null) {

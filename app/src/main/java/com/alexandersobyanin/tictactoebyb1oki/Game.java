@@ -1,7 +1,6 @@
 package com.alexandersobyanin.tictactoebyb1oki;
 
 import android.app.AlertDialog;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.speech.tts.TextToSpeech;
@@ -14,6 +13,7 @@ import android.widget.ArrayAdapter;
 import android.widget.GridView;
 import android.widget.TextView;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 
@@ -23,15 +23,15 @@ public class Game extends AppCompatActivity implements AdapterView.OnItemClickLi
     private static final String symbolForO = "O";
     private static final String symbolForPat = "P";
 
-    private static String[] datafield = {"", "", "", "", "", "", "", "", ""};
+    private static String[] dataFields = {"", "", "", "", "", "", "", "", ""};
 
     private static boolean isTicMove = true;
 
-    private static boolean speaked = false;
+    private static boolean isSpoken = false;
 
     ArrayAdapter<String> dataAdapter;
 
-    GridView dataField;
+    GridView dataFieldGridView;
 
     TextView infoText;
 
@@ -51,31 +51,31 @@ public class Game extends AppCompatActivity implements AdapterView.OnItemClickLi
             if (b1 >= 3) {
                 for (b1 = 0; ; b1++) {
                     if (b1 >= 3) {
-                        Log.d("Diagonal lines", datafield[2] + "-" + datafield[4] + "-" + datafield[6] + " - " + datafield[0] + "-" + datafield[4] + "-" + datafield[8]);
-                        if (!datafield[4].equals("") && ((datafield[2].equals(datafield[4]) && datafield[4].equals(datafield[6])) || (datafield[0].equals(datafield[4]) && datafield[4].equals(datafield[8]))))
-                            return datafield[4];
+                        Log.d("Diagonal lines", dataFields[2] + "-" + dataFields[4] + "-" + dataFields[6] + " - " + dataFields[0] + "-" + dataFields[4] + "-" + dataFields[8]);
+                        if (!dataFields[4].equals("") && ((dataFields[2].equals(dataFields[4]) && dataFields[4].equals(dataFields[6])) || (dataFields[0].equals(dataFields[4]) && dataFields[4].equals(dataFields[8]))))
+                            return dataFields[4];
                         break;
                     }
-                    Log.d("Vertical line №" + b1, datafield[b1] + "-" + datafield[b1 + 3] + "-" + datafield[b1 + 6]);
-                    if (!datafield[b1].equals("") && datafield[b1].equals(datafield[b1 + 3]) && datafield[b1].equals(datafield[b1 + 6]))
-                        return datafield[b1];
+                    Log.d("Vertical line №" + b1, dataFields[b1] + "-" + dataFields[b1 + 3] + "-" + dataFields[b1 + 6]);
+                    if (!dataFields[b1].equals("") && dataFields[b1].equals(dataFields[b1 + 3]) && dataFields[b1].equals(dataFields[b1 + 6]))
+                        return dataFields[b1];
                 }
                 break;
             }
-            Log.d("Horizontal line №" + b1, datafield[b1 * 3] + "-" + datafield[b1 * 3 + 1] + "-" + datafield[b1 * 3 + 2]);
-            if (!datafield[b1 * 3].equals("") && datafield[b1 * 3].equals(datafield[b1 * 3 + 1]) && datafield[b1 * 3].equals(datafield[b1 * 3 + 2]))
-                return datafield[b1 * 3];
+            Log.d("Horizontal line №" + b1, dataFields[b1 * 3] + "-" + dataFields[b1 * 3 + 1] + "-" + dataFields[b1 * 3 + 2]);
+            if (!dataFields[b1 * 3].equals("") && dataFields[b1 * 3].equals(dataFields[b1 * 3 + 1]) && dataFields[b1 * 3].equals(dataFields[b1 * 3 + 2]))
+                return dataFields[b1 * 3];
         }
         int b2 = 0;
         b1 = 0;
         while (true) {
-            if (b1 >= datafield.length) {
+            if (b1 >= dataFields.length) {
                 if (b2 >= 9)
                     return symbolForPat;
                 break;
             }
             int b = b2;
-            if (!datafield[b1].equals(""))
+            if (!dataFields[b1].equals(""))
                 b = b2 + 1;
             b1++;
             b2 = b;
@@ -85,18 +85,19 @@ public class Game extends AppCompatActivity implements AdapterView.OnItemClickLi
 
     private void restart() {
         for (int b = 0; ; b++) {
-            if (b >= datafield.length) {
+            if (b >= dataFields.length) {
                 this.dataAdapter.notifyDataSetChanged();
-                this.dataField.invalidateViews();
+                this.dataFieldGridView.invalidateViews();
                 return;
             }
-            datafield[b] = "";
+            dataFields[b] = "";
         }
     }
 
     private void speak(String paramString) {
-        if (speaked)
-            this.tts.speak(paramString, 0, null);
+        if (isSpoken) {
+            this.tts.speak(paramString, TextToSpeech.QUEUE_FLUSH, null, null);
+        }
     }
 
     protected void onDestroy() {
@@ -107,19 +108,19 @@ public class Game extends AppCompatActivity implements AdapterView.OnItemClickLi
     public void onItemClick(AdapterView<?> paramAdapterView, View paramView, int paramInt, long paramLong) {
         if (((TextView) paramAdapterView.getChildAt(paramInt).findViewById(R.id.one_field)).getText() == "") {
             if (isTicMove) {
-                datafield[paramInt] = symbolForX;
+                dataFields[paramInt] = symbolForX;
                 isTicMove = false;
                 this.infoText.setText(R.string.toe_move);
             } else {
-                datafield[paramInt] = symbolForO;
+                dataFields[paramInt] = symbolForO;
                 isTicMove = true;
                 this.infoText.setText(R.string.tic_move);
             }
             this.dataAdapter.notifyDataSetChanged();
-            this.dataField.invalidateViews();
+            this.dataFieldGridView.invalidateViews();
         } else {
-            speak(getString(R.string.cellownd));
-            this.infoText.setText(R.string.cellownd);
+            speak(getString(R.string.cell_owned));
+            this.infoText.setText(R.string.cell_owned);
         }
         String text = checkGame();
         Log.d("checkGame result", text);
@@ -154,20 +155,20 @@ public class Game extends AppCompatActivity implements AdapterView.OnItemClickLi
         speak(getString(R.string.move));
     }
 
-    protected void onRestoreInstanceState(Bundle paramBundle) {
+    protected void onRestoreInstanceState(@NonNull Bundle paramBundle) {
         super.onRestoreInstanceState(paramBundle);
-        datafield = paramBundle.getStringArray("GameField");
+        dataFields = paramBundle.getStringArray("GameField");
         isTicMove = paramBundle.getBoolean("isTicMove");
-        speaked = paramBundle.getBoolean("Speaked");
+        isSpoken = paramBundle.getBoolean("Spoken");
         this.tic = paramBundle.getInt("Tic");
         this.toe = paramBundle.getInt("Toe");
     }
 
-    protected void onSaveInstanceState(Bundle paramBundle) {
+    protected void onSaveInstanceState(@NonNull Bundle paramBundle) {
         super.onSaveInstanceState(paramBundle);
-        paramBundle.putStringArray("GameField", datafield);
+        paramBundle.putStringArray("GameField", dataFields);
         paramBundle.putBoolean("isTicMove", isTicMove);
-        paramBundle.putBoolean("Speaked", speaked);
+        paramBundle.putBoolean("Spoken", isSpoken);
         paramBundle.putInt("Tic", this.tic);
         paramBundle.putInt("Toe", this.toe);
     }
@@ -180,14 +181,11 @@ public class Game extends AppCompatActivity implements AdapterView.OnItemClickLi
         this.infoText = findViewById(R.id.infoText);
         this.ticScores = findViewById(R.id.ticScoresText);
         this.toeScores = findViewById(R.id.toeScoresText);
-        this.dataField = findViewById(R.id.gameField);
-        this.dataField.setOnItemClickListener(this);
-        this.dataAdapter = new ArrayAdapter<>(this, R.layout.grid_field, R.id.one_field, datafield);
-        this.dataField.setAdapter(this.dataAdapter);
-        this.tts = new TextToSpeech(this, new TextToSpeech.OnInitListener() {
-            public void onInit(int param1Int) {
-            }
-        });
+        this.dataFieldGridView = findViewById(R.id.gameField);
+        this.dataFieldGridView.setOnItemClickListener(this);
+        this.dataAdapter = new ArrayAdapter<>(this, R.layout.grid_field, R.id.one_field, dataFields);
+        this.dataFieldGridView.setAdapter(this.dataAdapter);
+        this.tts = new TextToSpeech(this, param1Int -> {});
         this.infoText.setText(R.string.welcome);
 
         Toolbar toolbar = findViewById(R.id.toolbar);
@@ -207,33 +205,21 @@ public class Game extends AppCompatActivity implements AdapterView.OnItemClickLi
         // as you specify a parent activity in AndroidManifest.xml.
         int id = item.getItemId();
         boolean is_speak_enabled = false;
-        switch (id) {
-            case R.id.menu_about:
-                startActivity(new Intent(this, About.class));
-                break;
-            case R.id.menu_exit:
-                exitFromGame();
-                break;
-            case R.id.menu_speak:
-                if (!speaked)
-                    is_speak_enabled = true;
-                speaked = is_speak_enabled;
-                break;
+        if (id == R.id.menu_about) {
+            startActivity(new Intent(this, About.class));
+        } else if (id == R.id.menu_exit) {
+            exitFromGame();
+        } else if (id == R.id.menu_speak) {
+            if (!isSpoken)
+                is_speak_enabled = true;
+            isSpoken = is_speak_enabled;
         }
         return super.onOptionsItemSelected(item);
     }
 
     protected void exitFromGame() {
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
-        builder.setMessage(R.string.onexitpressed).setCancelable(false).setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
-            public void onClick(DialogInterface param1DialogInterface, int param1Int) {
-                Game.this.finish();
-            }
-        }).setNegativeButton(android.R.string.no, new DialogInterface.OnClickListener() {
-            public void onClick(DialogInterface param1DialogInterface, int param1Int) {
-                param1DialogInterface.cancel();
-            }
-        });
+        builder.setMessage(R.string.on_exit_pressed).setCancelable(false).setPositiveButton(android.R.string.yes, (param1DialogInterface, param1Int) -> Game.this.finish()).setNegativeButton(android.R.string.no, (param1DialogInterface, param1Int) -> param1DialogInterface.cancel());
         builder.create().show();
     }
 }

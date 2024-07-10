@@ -1,13 +1,13 @@
 apply plugin: 'com.android.application'
 
 android {
-    compileSdkVersion 33
+    compileSdk 34
     defaultConfig {
         applicationId "com.alexandersobyanin.tictactoebyb1oki"
-        minSdkVersion 19
-        targetSdkVersion 33
-        versionCode 8
-        versionName '2.1.6'
+        minSdk 21
+        targetSdk 34
+        versionCode 10
+        versionName '2.2.0'
     }
     buildTypes {
         release {
@@ -15,11 +15,12 @@ android {
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
         }
     }
+    namespace 'com.alexandersobyanin.tictactoebyb1oki'
 }
 
 dependencies {
     implementation fileTree(dir: 'libs', include: ['*.jar'])
-    implementation 'androidx.appcompat:appcompat:1.3.0-rc01'
-    implementation 'androidx.constraintlayout:constraintlayout:2.0.4'
-    implementation 'com.google.android.material:material:1.4.0-alpha02'
+    implementation 'androidx.appcompat:appcompat:1.7.0'
+    implementation 'androidx.constraintlayout:constraintlayout:2.1.4'
+    implementation 'com.google.android.material:material:1.12.0'
 }
