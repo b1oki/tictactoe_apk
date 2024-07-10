@@ -1,13 +1,13 @@
 apply plugin: 'com.android.application'
 
 android {
-    compileSdk 34
+    compileSdk 35
     defaultConfig {
         applicationId "com.alexandersobyanin.tictactoebyb1oki"
         minSdk 21
-        targetSdk 34
+        targetSdk 35
         versionCode 10
-        versionName '2.2.0'
+        versionName '2.2.1'
     }
     buildTypes {
         release {
