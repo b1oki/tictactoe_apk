@@ -1,5 +1,9 @@
 <resources>
     <string name="app_name">TicTacToe by b1oki</string>
+    <string name="app_id" translatable="false">728295912965</string>
+    <string name="package_name" translatable="false">com.alexandersobyanin.tictactoebyb1oki</string>
+    <string name="game_services_project_id" translatable="false">728295912965</string>
+    <string name="achievement_one_game_played" translatable="false">CgkIhezGjpkVEAIQAQ</string>
     <string name="privacy_policy_url" translatable="false">file:///android_asset/privacy_policy_tictactoe_b1oki.html</string>
     <string name="menu_speak">Speak</string>
     <string name="menu_about">About</string>

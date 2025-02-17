@@ -17,7 +17,15 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 
+import com.google.android.gms.games.GamesSignInClient;
+import com.google.android.gms.games.PlayGames;
+import com.google.android.gms.games.PlayGamesSdk;
+
+import java.util.Arrays;
+
 public class Game extends AppCompatActivity implements AdapterView.OnItemClickListener {
+
+    GamesSignInClient gamesSignInClient = PlayGames.getGamesSignInClient(this);
 
     private static final String symbolForX = "X";
     private static final String symbolForO = "O";
@@ -124,6 +132,9 @@ public class Game extends AppCompatActivity implements AdapterView.OnItemClickLi
         }
         String text = checkGame();
         Log.d("checkGame result", text);
+        if (Arrays.asList(symbolForPat, symbolForX, symbolForO).contains(text)) {
+            PlayGames.getAchievementsClient(this).unlock(getString(R.string.achievement_one_game_played));
+        }
         if (text.equals(symbolForPat)) {
             speak(getString(R.string.no_win));
             this.infoText.setText(R.string.no_win);
@@ -155,6 +166,53 @@ public class Game extends AppCompatActivity implements AdapterView.OnItemClickLi
         speak(getString(R.string.move));
     }
 
+    private void signInSilently() {
+        gamesSignInClient.isAuthenticated().addOnCompleteListener(isAuthenticatedTask -> {
+            boolean isAuthenticated =
+                    (isAuthenticatedTask.isSuccessful() &&
+                            isAuthenticatedTask.getResult().isAuthenticated());
+            if (isAuthenticated) {
+                // Continue with Play Games Services
+            } else {
+                // If authentication fails, either disable Play Games Services
+                // integration or
+                // display a login button to prompt players to sign in.
+                // Use`gamesSignInClient.signIn()` when the login button is clicked.
+            }
+        });
+    }
+
+    private void startSignInIntent() {
+        gamesSignInClient
+                .signIn()
+                .addOnCompleteListener( task -> {
+                    if (task.isSuccessful() && task.getResult().isAuthenticated()) {
+                        // sign in successful
+                    } else {
+                        // sign in failed
+                    }
+                });
+    }
+
+    private void checkIfAutomaticallySignedIn() {
+        gamesSignInClient.isAuthenticated().addOnCompleteListener(isAuthenticatedTask -> {
+            boolean isAuthenticated =
+                    (isAuthenticatedTask.isSuccessful() &&
+                            isAuthenticatedTask.getResult().isAuthenticated());
+
+            if (isAuthenticated) {
+                // Continue with Play Games Services
+                // If your game requires specific actions upon successful sign-in,
+                // you can add your custom logic here.
+                // For example, fetching player data or updating UI elements.
+            } else {
+                // Disable your integration with Play Games Services or show a
+                // login button to ask  players to sign-in. Clicking it should
+                // call GamesSignInClient.signIn().
+            }
+        });
+    }
+
     protected void onRestoreInstanceState(@NonNull Bundle paramBundle) {
         super.onRestoreInstanceState(paramBundle);
         dataFields = paramBundle.getStringArray("GameField");
@@ -177,6 +235,8 @@ public class Game extends AppCompatActivity implements AdapterView.OnItemClickLi
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        PlayGamesSdk.initialize(this);
 
         this.infoText = findViewById(R.id.infoText);
         this.ticScores = findViewById(R.id.ticScoresText);
@@ -215,6 +275,14 @@ public class Game extends AppCompatActivity implements AdapterView.OnItemClickLi
             isSpoken = is_speak_enabled;
         }
         return super.onOptionsItemSelected(item);
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        // When the activity is inactive, the signed-in user's state can change;
+        // therefore, silently sign in when the app resumes.
+        signInSilently();
     }
 
     protected void exitFromGame() {
