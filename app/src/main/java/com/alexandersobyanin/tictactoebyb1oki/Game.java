@@ -13,6 +13,7 @@ import android.widget.ArrayAdapter;
 import android.widget.GridView;
 import android.widget.TextView;
 
+import androidx.activity.EdgeToEdge;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
@@ -233,6 +234,7 @@ public class Game extends AppCompatActivity implements AdapterView.OnItemClickLi
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        EdgeToEdge.enable(this);
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
@@ -287,7 +289,7 @@ public class Game extends AppCompatActivity implements AdapterView.OnItemClickLi
 
     protected void exitFromGame() {
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
-        builder.setMessage(R.string.on_exit_pressed).setCancelable(false).setPositiveButton(android.R.string.yes, (param1DialogInterface, param1Int) -> Game.this.finish()).setNegativeButton(android.R.string.no, (param1DialogInterface, param1Int) -> param1DialogInterface.cancel());
+        builder.setMessage(R.string.on_exit_pressed).setCancelable(false).setPositiveButton(android.R.string.ok, (param1DialogInterface, param1Int) -> Game.this.finish()).setNegativeButton(android.R.string.cancel, (param1DialogInterface, param1Int) -> param1DialogInterface.cancel());
         builder.create().show();
     }
 }
